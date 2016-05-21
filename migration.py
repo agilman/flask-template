@@ -4,12 +4,9 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
 
-from app import app, schema, config
+from app import app, config
+from app.schema import * 
 
-#app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = config.sqlalchemy_database_uri
-
-db = schema.db
 migrate = Migrate(app, db)
 
 manager = Manager(app)
