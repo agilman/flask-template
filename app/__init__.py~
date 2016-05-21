@@ -1,9 +1,0 @@
-from flask import Flask
-import config
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = config.sqlalchemy_database_uri
-
-from notes import views
-from notes import schema
-
