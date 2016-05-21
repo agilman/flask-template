@@ -1,10 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from app import app
 
-db = SQLAlchemy(app)
+from app.database import Base
 
-class User(db.Model):
+class User(Base):
     __tablename__='user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
@@ -23,7 +22,7 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 
-class ToDoList(db.Model):
+class ToDoList(Base):
     __tablename__ = 'toDoList'
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer,db.ForeignKey('user.id'))
@@ -33,7 +32,7 @@ class ToDoList(db.Model):
     items = db.relationship('ToDoItems')
     
 
-class ToDoItem(db.Model):
+class ToDoItem(Base):
     __tablename__ = 'toDoItem'
     id = db.Column(db.Integer, primary_key=True)
     toDoList = db.Column(db.Integer,db.ForeignKey('toDoList.id'))

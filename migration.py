@@ -5,7 +5,7 @@ from flask_migrate import Migrate, MigrateCommand
 
 
 from app import app, config
-from app.schema import * 
+from app.models import * 
 
 migrate = Migrate(app, db)
 
