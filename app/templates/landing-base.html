@@ -14,6 +14,9 @@
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
+    {% block additionalCSS %}
+    {% endblock %}
+ 
     <!-- Custom CSS -->
     <link href="/static/startbootstrap/css/freelancer.css" rel="stylesheet">
 
@@ -44,7 +47,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">To Do Lists</a>
+                <a class="navbar-brand" href="/">To Do Lists</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -67,6 +70,7 @@
     <header>
         <div class="container">
             <div class="row">
+	      {% block mainRow %}
                 <div class="col-lg-12">
                     <img class="img-responsive" src="/static/startbootstrap/img/profile.png" alt="">
                     <div class="intro-text">
@@ -77,6 +81,7 @@
 			{% endblock %}
                     </div>
                 </div>
+	      {% endblock %}
             </div>
         </div>
     </header>
