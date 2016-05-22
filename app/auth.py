@@ -1,7 +1,19 @@
 
 from flask import session, redirect, request, render_template
 from app import app
-from app.models import db , User
+from app.models import *
+
+def getUserFromDb(username,password):
+    userQuery = User.query.filter_by(username=username)
+
+    if userQuery.count()==0:
+        return "No such user"
+    else:
+        usr =  userQuery.first()
+        if usr.passwordHash==password:
+            return usr
+        else:
+            return "Login failed"
 
 @app.route("/auth/login",methods=["GET","POST"])
 def login():
@@ -9,12 +21,14 @@ def login():
     if request.method=="POST":
         username = form["username"]
         password = form["password"]
-
-        #Make sure input is valid
-        #get userId
         
+        dbUser = getUserFromDb(username,password)
+
+        if type(dbUser) is str:
+            return "MSG : BAD LOG IN"
+
         session['userName']=username
-        session['userId']=1
+        session['userId']=dbUser.id
         
         return redirect("/users/"+username)
     else:
@@ -24,11 +38,15 @@ def login():
 def register(username=None):
     form = request.form
     
+    #TODO:
+    #Make sure unique constraint is satisfied before trying to add to db
+    
     if request.method=="POST":
         username = form["username"]
         password = form["password"]
+        email = form["email"]
         
-        user = User(username=username, password=password)
+        user = User(username=username, email=email, password=password)
         db.session.add(user)
         db.session.commit()
         
@@ -38,7 +56,6 @@ def register(username=None):
         return redirect("/users/"+username)
     else:
         return render_template("register.html")
-
 
 @app.route("/auth/logout")
 def logout():
