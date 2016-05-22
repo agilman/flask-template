@@ -16,9 +16,10 @@ class User(db.Model):
     
     toDoLists = db.relationship('ToDoList') 
 
-    def __init__(self, username, email):
+    def __init__(self, username,password=None,email=None):
         self.username = username
         self.email = email
+        self.passwordHash = password
 
     def __repr__(self):
         return '<User %r>' % self.username
