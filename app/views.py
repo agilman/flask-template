@@ -1,4 +1,4 @@
-from flask import session
+from flask import session, render_template
 from app import app
 from app.models import * 
 
@@ -15,9 +15,9 @@ def index():
     if 'userName' in session.keys():
         userName = session['userName']
         userId = session['userId']
-        return 'LOGGED IN Hello World!'
+        return render_template("landingSession.html", userName=userName,userId=userId)
     else:
-        return "NOT LOGGED IN"
+        return render_template("landing.html")
 
 @app.route('/users/<userName>')
 def users(userName):
@@ -27,5 +27,10 @@ def users(userName):
         return "NO SUCH USER"
 
     else:
-        return ("OK< here is the user: %s" %userId)
+        if 'userId' in session.keys():
+            if session['userId']==userId:
+                return "editor template"
+                
+        return "viewer template"
+
     
