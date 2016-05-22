@@ -11,9 +11,10 @@ def login():
         password = form["password"]
 
         #Make sure input is valid
-        #store userId in session.
-
-        session['username']=username
+        #get userId
+        
+        session['userName']=username
+        session['userId']=1
         
         return redirect("/users/"+username)
     else:
@@ -31,7 +32,7 @@ def register(username=None):
         db.session.add(user)
         db.session.commit()
         
-        session['username'] = username
+        session['userName'] = username
         session['userId'] = user.id
         
         return redirect("/users/"+username)
@@ -41,6 +42,7 @@ def register(username=None):
 
 @app.route("/auth/logout")
 def logout():
-    session.pop('username', None)
+    session.pop('userName', None)
     session.pop('userId', None)
+    session.clear()
     return redirect("/")

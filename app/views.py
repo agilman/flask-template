@@ -1,9 +1,10 @@
+from flask import session
 from app import app
 from app.models import * 
 
 def getUserId(userName):
     query = User.query.filter_by(username=userName)
-    
+   
     if query.count()>0:
         return query.first().id
 
@@ -11,8 +12,12 @@ def getUserId(userName):
 
 @app.route('/')
 def index():
-    return 'Hello World!'
-
+    if 'userName' in session.keys():
+        userName = session['userName']
+        userId = session['userId']
+        return 'LOGGED IN Hello World!'
+    else:
+        return "NOT LOGGED IN"
 
 @app.route('/users/<userName>')
 def users(userName):
