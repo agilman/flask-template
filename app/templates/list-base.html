@@ -30,46 +30,52 @@
 <body id="page-top" class="index">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <div id="wrap">
+      <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
-            <!-- Brand and toggle get groped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-		<a class="navbar-brand" href="/">To Do Lists</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-		    {% block topBar %}
-		    {% endblock %}
-                </ul>
-            </div>
+          <!-- Brand and toggle get groped for better mobile display -->
+          <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+	    <a class="navbar-brand" href="/">To Do Lists</a>
+          </div>
+	  
+          <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+		{% if loginName %}
+		<li>Logged in as {{ loginName }}</li>
+		<li><a href="/auth/logout">Log Out</a></li>
+		{% else %}
+		<li><a href="/auth/login">Log in</a></li>
+		<li><a href="/auth/register">Register</a></li>
+		{% endif %}
+		
+              </ul>
+	    </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
-    </nav>
+      </div>
+    </div>
 
+    <div style="clear:both"></div>
     <!-- Header -->
+    
     <header>
-        <div class="container">
-            <div class="row">
-	      {% block mainRow %}                
-	      {% endblock %}
-            </div>
-        </div>
+      <div class="container">
+	<div class="row">
+	  <div class="col-md-5">
+	    {% block mainRow %}
+	    {% endblock %}
+	  </div>
+	</div>
+      </div>
     </header>
-
-
-
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll visible-xs visible-sm">
@@ -95,5 +101,10 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/static/startbootstrap/js/freelancer.js"></script>
+    {% if userId %}
+    <input type="hidden" id="userId" value={{ userId }} />
+    {% endif %}
+    {% block hiddenVars %}
+    {% endblock %}
 </body>
 </html>

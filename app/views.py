@@ -29,10 +29,14 @@ def users(userName):
     else:
         userId = pageOwner.id
         userDbName = pageOwner.username
-        if 'userId' in session.keys():
-            if session['userId']==userId: #If user is looking at his own page... load editor mode
-                return render_template("listEditor.html",userName=userDbName, userId=userId)
+        loginName = None
+
+        if 'userName' in session.keys():
+            loginName = session['userName']
+            loginId = session['userId']
+            if loginId==userId: #If user is looking at his own page... load editor mode
+                return render_template("listEditor.html",userName=userDbName, userId=userId, loginName=loginName)
                 
-        return render_template("listViewer.html",userName=userDbName, userId=userId)
+        return render_template("listViewer.html",userName=userDbName, userId=userId, loginName=loginName)
 
     
