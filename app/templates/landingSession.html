@@ -1,6 +1,7 @@
 {% extends "landing-base.html" %}
 
 {% block actionArea %}
-HELLO  {{ userName }}
-
+<p>
+HELLO  <a style="color:white" href="/users/{{ userName }}">{{ userName }}</a>
+</p>
 {% endblock %}
