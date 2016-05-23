@@ -2,13 +2,13 @@ from flask import session, render_template
 from app import app
 from app.models import * 
 
-def getUserId(userName):
+def getUser(userName):
     query = User.query.filter_by(username=userName)
    
     if query.count()>0:
-        return query.first().id
+        return query.first()
 
-    return 0
+    return "No such user"
 
 @app.route('/')
 def index():
@@ -21,16 +21,18 @@ def index():
 
 @app.route('/users/<userName>')
 def users(userName):
-    userId = getUserId(userName)
+    pageOwner = getUser(userName)
 
-    if userId==0:
-        return "NO SUCH USER"
+    if type(pageOwner) is str:
+        return render_template("listViewer.html",msg="Invalid User")
 
     else:
+        userId = pageOwner.id
+        userDbName = pageOwner.username
         if 'userId' in session.keys():
-            if session['userId']==userId:
-                return "editor template"
+            if session['userId']==userId: #If user is looking at his own page... load editor mode
+                return render_template("listEditor.html",userName=userDbName, userId=userId)
                 
-        return "viewer template"
+        return render_template("listViewer.html",userName=userDbName, userId=userId)
 
     
