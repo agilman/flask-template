@@ -1,5 +1,5 @@
 from app import app
-
+from app import config
  
-app.run(debug=True)
+app.run(debug=config.debug)
 
