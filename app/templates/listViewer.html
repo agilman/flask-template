@@ -1,8 +1,24 @@
 {% extends "list-base.html" %}
 
-{% block mainRow %}
-{% if msg %}
-<h3>{{ msg }}</h3>
-{% endif %}
+{% block app %} ng-app="ToDoApp" {% endblock %}
 
+{% block controller %} ng-controller="ToDoAppController" {% endblock %}
+
+{% block mainRow %}
+    {% if msg %}
+       <h3>{{ msg }}</h3>
+    {% else %}
+       <div id="lists">
+	 <div clss="list">
+	   <div class="listName">Hello</div>
+	   <div class="completed">[4/5</div>
+	   <div class="listDate">12/04/2015</div>
+	 </div>
+       </div>
+    {% endif %}
 {% endblock %}
+
+{% block additionalJS %}
+<script src="/static/js/listViewer.js"></script>
+{% endblock %}
+

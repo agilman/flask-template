@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask
 
 from app import config
 
@@ -10,4 +10,3 @@ from app import models
 from app import api
 from app import views
 from app import auth
-

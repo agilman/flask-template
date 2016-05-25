@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" {% block app %}{% endblock %} >
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,10 +23,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-
 </head>
 
-<body id="page-top" class="index">
+<body id="page-top" class="index" {% block controller %}{% endblock %} >
 
     <!-- Navigation -->
     <div id="wrap">
@@ -54,7 +52,6 @@
 		<li><a href="/auth/login">Log in</a></li>
 		<li><a href="/auth/register">Register</a></li>
 		{% endif %}
-		
               </ul>
 	    </div>
             <!-- /.navbar-collapse -->
@@ -64,8 +61,8 @@
     </div>
 
     <div style="clear:both"></div>
-    <!-- Header -->
-    
+
+    <!-- Header -->    
     <header>
       <div class="container">
 	<div class="row">
@@ -99,11 +96,17 @@
     <script src="/static/startbootstrap/js/jqBootstrapValidation.js"></script>
     <script src="/static/startbootstrap//contact_me.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="/static/startbootstrap/js/freelancer.js"></script>
+    <!--Angular.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    {% block additionalJS %}
+    {% endblock %}
+    
     {% if userId %}
     <input type="hidden" id="userId" value={{ userId }} />
     {% endif %}
+
     {% block hiddenVars %}
     {% endblock %}
 </body>
