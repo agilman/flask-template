@@ -1,18 +1,11 @@
-
 function getLists(userId){
-    return {'lists':['a','b','c']};
+    return ["First List","SecondLIst","Another"];
 }
 
+(function(angular){
 angular.module('ToDoApp', [])
-.controller('ToDoAppController', ['$scope', function($scope) {
-    angular.element(document).ready(function () {
-	var userId = $("#userId");
-	if (typeof userId != "undefined"){
-	    var userId = $("#userId").val() 
-	    $scope.userLists = getLists(userId);
-	    
-	}
-    });
+.controller('listController', ['$scope', function($scope) {
+    $scope.lists = getLists(1);
 }]);
 
-	    
+})(window.angular);	    
