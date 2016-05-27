@@ -1,2 +1,3 @@
 /migrations/*
 /app/NotesDb.db
+/app/__pycache__/*
