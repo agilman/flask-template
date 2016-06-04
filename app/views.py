@@ -10,6 +10,10 @@ def getUser(userName):
 
     return "No such user"
 
+@app.route('/SPA')
+def spa():
+    return render_template('SPA.html')
+
 @app.route('/')
 def index():
     if 'userName' in session.keys():

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html ng-app>
+<head>
+
+<link rel="stylesheet" href="/static/toDoList.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+
+</head>
+<body>
+  
+  <div class="container-fluid" style="background:red">
+    <div class="row">
+      <div class="col-xs-3">
+	<h2>Hello World</h2>
+      </div>
+    </div>
+    
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-3">
+	<ul class="list-group">
+	  <li class="list-group-item toDoList" onclick="listClick(0)">TODo list 1 <span class="badge pull-right">4/5</span></li>
+	  <li class="list-group-item toDoList" onclick="listClick(1)">TODo list 2 <span class="badge pull-right">1/3</span></li>
+	</ul>
+      </div>
+
+      <div class="col-xs-4">
+	<ul class="list-group">
+	  <div class="list-group-item">a</div>
+	  <div class="list-group-item">b</div>
+	  <div class="list-group-item">c</div>
+	</ul>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Scripts -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></scrip>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-route.min.js"></script>
+  <script src="/static/js/spa_index.js"></script>
+</body>
+</html>
