@@ -14,6 +14,10 @@ def getUser(userName):
 def spa():
     return render_template('SPA.html')
 
+@app.route('/SPA_editor')
+def spa_editor():
+    return render_template('SPA_editor.html')
+
 @app.route('/')
 def index():
     if 'userName' in session.keys():
