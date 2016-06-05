@@ -12,8 +12,17 @@ function getLists(){
 
 (function(angular){
 angular.module('myApp', [])
-.controller('ToDoEditController', ['$scope', function($scope) {
+.controller('MyAppController', ['$scope', function($scope) {
     $scope.toDoLists=getLists();
+    $scope.selectedList=0;
+    $scope.things = $scope.toDoLists[$scope.selectedList].items;
+    $scope.checkMark = function(indx){
+	if ($scope.things[indx].checked){
+	    return "check";
+	}else{
+	    return "unchecked";
+	}
+    };
     $scope.getChecked = function(indx){
 	var items = $scope.toDoLists[indx].items;
 	var checkedCount = 0;
@@ -23,11 +32,14 @@ angular.module('myApp', [])
 	    }
 	}
 	return checkedCount.toString();
-	};
+    };
     $scope.getTotal = function(indx){
 	var total = $scope.toDoLists[indx].items.length;
 	return total.toString();
-	};
+    };
+}])
+.controller('ToDoEditController',['$scope',function($scope){
+}])
+.controller('ToDoItemsController',['$scope',function($scope){
 }]);
-
 })(window.angular);

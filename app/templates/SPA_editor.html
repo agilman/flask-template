@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 </head>
-<body ng-controller="ToDoEditController">
+<body ng-controller="MyAppController">
   
   <div class="container-fluid" style="background:red">
     <div class="row">
@@ -28,15 +28,18 @@
 	  </span>
 	</div>
 
-	<ul class="list-group">
-	  <li class="list-group-item clearfix toDoList" ng-repeat="toDoList in toDoLists" onclick="toDoClick($index)">
-	    {{ '{{ toDoList.name }}' }}
-	    <span class="pull-right">
-	      <span class="badge"> {{ '{{getChecked($index) }}' }}/{{ '{{ getTotal($index) }}'  }}</span>
-	      <button class="btn"><span class="glyphicon glyphicon-remove" onclick="removeList($index)"></span></button>
-	    </span>
-	  </li>
-	</ul>
+	<div ng-controller="ToDoEditController">
+	  <ul class="list-group">
+	    <li class="list-group-item clearfix toDoList" ng-repeat="toDoList in toDoLists" onclick="toDoClick($index)">
+	      {{ '{{ toDoList.name }}' }}
+	      <span class="pull-right">
+		<span class="badge"> {{ '{{getChecked($index) }}' }}/{{ '{{ getTotal($index) }}'  }}</span>
+		<button class="btn"><span class="glyphicon glyphicon-remove" onclick="removeList($index)"></span></button>
+	      </span>
+	    </li>
+	  </ul>
+	</div>
+	
 
       </div> <!-- end col-->
 
@@ -53,65 +56,20 @@
 	  </span>	  
 	</div>
 
-	<div class="input-group">
-	  <span class="input-group-addon">
-	    <span class="glyphicon glyphicon-check"></span>
-	  </span>
-	  <input type="text" class="form-control" value="Learn Python" />
-	  <span class="input-group-btn">
-	    <button class="btn">
-	      <span class="glyphicon glyphicon-remove"></span>
-	    </button>
-	  </span>	  
+	<div ng-controller="ToDoItemsController">
+	  <div class="input-group" ng-repeat="item in things">
+	    <span class="input-group-addon" >
+	      <span class="glyphicon glyphicon-{{ '{{ checkMark($index) }}' }} "></span>
+	    </span>
+	    <input type="text" class="form-control" value="{{ '{{ item.name }}' }}" />
+	    <span class="input-group-btn">
+	      <button class="btn">
+		<span class="glyphicon glyphicon-remove"></span>
+	      </button>
+	    </span>	  
+	  </div>
 	</div>
 
-	<div class="input-group">
-	  <span class="input-group-addon">
-	    <span class="glyphicon glyphicon-check"></span>
-	  </span>
-	  <input type="text" class="form-control" value="Learn flask" />
-	  <span class="input-group-btn">
-	    <button class="btn">
-	      <span class="glyphicon glyphicon-remove"></span>
-	    </button>
-	  </span>	  
-	</div>
-
-	<div class="input-group">
-	  <span class="input-group-addon">
-	    <span class="glyphicon glyphicon-unchecked"></span>
-	  </span>
-	  <input type="text" class="form-control" value="Learn Bootstrap" />
-	  <span class="input-group-btn">
-	    <button class="btn">
-	      <span class="glyphicon glyphicon-remove"></span>
-	    </button>
-	  </span>	  
-	</div>
-
-	<div class="input-group">
-	  <span class="input-group-addon">
-	    <span class="glyphicon glyphicon-unchecked"></span>
-	  </span>
-	  <input type="text" class="form-control" value="Learn Angular" />
-	  <span class="input-group-btn">
-	    <button class="btn">
-	      <span class="glyphicon glyphicon-remove"></span>
-	    </button>
-	  </span>	  
-	</div>
-
-	<div class="input-group">
-	  <span class="input-group-addon">
-	    <span class="glyphicon glyphicon-unchecked"></span>
-	  </span>
-	  <input type="text" class="form-control" value="Learn Node.js" />
-	  <span class="input-group-btn">
-	    <button class="btn">
-	      <span class="glyphicon glyphicon-remove"></span>
-	    </button>
-	  </span>	  
-	</div>
 
       </div>
     </div>
