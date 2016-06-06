@@ -19,9 +19,9 @@
     <div class="row">
       <div class="col-xs-4">
 	<div class="input-group">
-	  <input type="text" class="form-control" placeholder="New To Do List">
+	  <input type="text" class="form-control" placeholder="New To Do List" ng-model="newListName">
 	  <span class="input-group-btn">
-	    <button class="btn" >
+	    <button class="btn" ng-click="addListClick(newListName)">
 	      <span class="glyphicon glyphicon-plus"></span>
 	    </button>
 	  </span>
@@ -33,7 +33,7 @@
 	      {{ '{{ toDoList.name }}' }}
 	      <span class="pull-right">
 		<span class="badge"> {{ '{{getChecked($index) }}' }}/{{ '{{ getTotal($index) }}'  }}</span>
-		<button class="btn"><span class="glyphicon glyphicon-remove" ng-click="removeList($index)"></span></button>
+		<button class="btn" ng-click="removeListClick($index)"><span class="glyphicon glyphicon-remove"></span></button>
 	      </span>
 	    </li>
 	  </ul>
@@ -57,11 +57,11 @@
 	<div ng-controller="ToDoItemsController">
 	  <div class="input-group" ng-repeat="item in items">
 	    <span class="input-group-addon" >
-	      <span class="glyphicon glyphicon-{{ '{{ checkMark($index) }}' }} "></span>
+	      <span class="glyphicon glyphicon-{{ '{{ checkMark($index) }}' }} itemCheckbox" ng-click="checkClick($index)"></span>
 	    </span>
 	    <input type="text" class="form-control" value="{{ '{{ item.name }}' }}" />
 	    <span class="input-group-btn">
-	      <button class="btn">
+	      <button class="btn" ng-click="itemRemoveClick($index)">
 		<span class="glyphicon glyphicon-remove"></span>
 	      </button>
 	    </span>	  

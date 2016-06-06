@@ -4,3 +4,6 @@ li.list-group-item.toDoList:hover{
     background-color: #000000;
 }
 
+.itemCheckbox:hover{
+    cursor:pointer;
+}
