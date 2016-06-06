@@ -7,7 +7,6 @@
 
 </head>
 <body ng-controller="MyAppController">
-  
   <div class="container-fluid" style="background:red">
     <div class="row">
       <div class="col-xs-3">
@@ -28,18 +27,17 @@
 	  </span>
 	</div>
 
-	<div ng-controller="ToDoEditController">
+	<div ng-controller="ToDoListsController">
 	  <ul class="list-group">
-	    <li class="list-group-item clearfix toDoList" ng-repeat="toDoList in toDoLists" onclick="toDoClick($index)">
+	    <li class="list-group-item clearfix toDoList" ng-repeat="toDoList in toDoLists" ng-click="toDoClick($index)">
 	      {{ '{{ toDoList.name }}' }}
 	      <span class="pull-right">
 		<span class="badge"> {{ '{{getChecked($index) }}' }}/{{ '{{ getTotal($index) }}'  }}</span>
-		<button class="btn"><span class="glyphicon glyphicon-remove" onclick="removeList($index)"></span></button>
+		<button class="btn"><span class="glyphicon glyphicon-remove" ng-click="removeList($index)"></span></button>
 	      </span>
 	    </li>
 	  </ul>
-	</div>
-	
+	</div>	
 
       </div> <!-- end col-->
 
@@ -57,7 +55,7 @@
 	</div>
 
 	<div ng-controller="ToDoItemsController">
-	  <div class="input-group" ng-repeat="item in things">
+	  <div class="input-group" ng-repeat="item in items">
 	    <span class="input-group-addon" >
 	      <span class="glyphicon glyphicon-{{ '{{ checkMark($index) }}' }} "></span>
 	    </span>
@@ -70,11 +68,9 @@
 	  </div>
 	</div>
 
-
       </div>
     </div>
   </div>
-  
 
   <!-- Scripts -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
