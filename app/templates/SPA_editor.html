@@ -10,7 +10,7 @@
   <div class="container-fluid" style="background:red">
     <div class="row">
       <div class="col-xs-3">
-	<h2>Hello World</h2>
+	<h2>To-Do Lists</h2>
       </div>
     </div>
   </div>
@@ -41,14 +41,21 @@
 
       </div> <!-- end col-->
 
-      <div class="col-xs-4">
+      <div class="col-xs-4">	
+	<ul class="list-group center-block">
+	  <li class="list-group-item">
+	    <span class="glyphicon glyphicon-list listName"></span>
+	    <span class="text-center listName">{{ '{{ selectedListName }}' }}</span>
+	  </li>
+	</ul>
+
 	<div class="input-group">
 	  <span class="input-group-addon">
 	    <span class="glyphicon glyphicon-plus" style="visibility:hidden"></span>
 	  </span>
-	  <input type="text" class="form-control" placeholder="Add New Item">
+	  <input type="text" class="form-control" ng-model="newItemName" placeholder="Add New Item">
 	  <span class="input-group-btn">
-	    <button class="btn">
+	    <button class="btn" ng-click="addItemClick(newItemName)">
 	      <span class="glyphicon glyphicon-plus"></span>
 	    </button>
 	  </span>	  
