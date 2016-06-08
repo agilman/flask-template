@@ -4,7 +4,7 @@ from app import app
 from app.models import *
 
 def getUserFromDb(username,password):
-    userQuery = User.query.filter_by(username=username)
+    userQuery = Users.query.filter_by(username=username)
 
     if userQuery.count()==0:
         return "No such user"
@@ -46,7 +46,7 @@ def register(username=None):
         password = form["password"]
         email = form["email"]
         
-        user = User(username=username, email=email, password=password)
+        user = Users(username=username, email=email, password=password)
         db.session.add(user)
         db.session.commit()
         

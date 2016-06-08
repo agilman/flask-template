@@ -5,8 +5,8 @@ from app import app
 
 db = SQLAlchemy(app)
 
-class User(db.Model):
-    __tablename__='user'
+class Users(db.Model):
+    __tablename__='users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
@@ -14,7 +14,7 @@ class User(db.Model):
     lastName = db.Column(db.String(20))
     passwordHash = db.Column(db.String(128))
     
-    toDoLists = db.relationship('ToDoList') 
+    toDoLists = db.relationship('ToDoLists') 
 
     def __init__(self, username,password,email):
         self.username = username
@@ -25,20 +25,20 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 
-class ToDoList(db.Model):
-    __tablename__ = 'toDoList'
+class ToDoLists(db.Model):
+    __tablename__ = 'toDoLists'
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer,db.ForeignKey('user.id'))
+    userId = db.Column(db.Integer,db.ForeignKey('users.id'))
     private = db.Column(db.Boolean)
     date = db.Column(db.Date)
     
-    items = db.relationship('ToDoItem')
+    items = db.relationship('ToDoItems')
     
 
-class ToDoItem(db.Model):
-    __tablename__ = 'toDoItem'
+class ToDoItems(db.Model):
+    __tablename__ = 'toDoItems'
     id = db.Column(db.Integer, primary_key=True)
-    toDoList = db.Column(db.Integer,db.ForeignKey('toDoList.id'))
+    toDoList = db.Column(db.Integer,db.ForeignKey('toDoLists.id'))
     task = db.Column(db.String(128))
     completed = db.Column(db.Boolean)
 

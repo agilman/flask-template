@@ -3,7 +3,9 @@
 angular.module('myApp', [])
 .controller('MyAppController', ['$scope','$http', function($scope,$http) {
 
-    $http.get('/services/api/userLists?userId=1').then(function(data){
+    var userId = document.getElementById("userId").value;
+    
+    $http.get('/services/api/userLists?userId='+userId).then(function(data){
 	$scope.toDoLists = data.data.data;
 	$scope.selectedList = 0;
 	$scope.selectedListName = $scope.toDoLists[$scope.selectedList].name;
@@ -40,6 +42,7 @@ angular.module('myApp', [])
 	    $scope.toDoLists[$scope.selectedList].items[data].checked=true;
 	}
     });
+
     $scope.$on('removeListEvent',function(event,data){
 	$scope.toDoLists.splice(data,1);
 	if (data==$scope.selectedList){

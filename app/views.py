@@ -3,7 +3,7 @@ from app import app
 from app.models import * 
 
 def getUser(userName):
-    query = User.query.filter_by(username=userName)
+    query = Users.query.filter_by(username=userName)
    
     if query.count()>0:
         return query.first()
@@ -43,7 +43,7 @@ def users(userName):
             loginName = session['userName']
             loginId = session['userId']
             if loginId==userId: #If user is looking at his own page... load editor mode
-                return render_template("listEditor.html",userName=userDbName, userId=userId, loginName=loginName)
+                return render_template("SPA_editor.html", userId=userId)
                 
         return render_template("listViewer.html",userName=userDbName, userId=userId, loginName=loginName)
 
