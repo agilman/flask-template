@@ -62,6 +62,32 @@ class UserLists(Resource):
 
         return jsonify(deleted=li._asdict())
 
+class listItems(Resource):
+    def post(self):
+        jsonDict = request.get_json()
+        
+        #TODO check if keys were passed
+        listId = jsonDict['listId']
+        task = jsonDict['task']
+        newItem = ToDoItems(listId=listId,task=task)
+        
+        #todo : try except
+        db.session.add(newItem)
+        db.session.commit()
+        
+        return jsonify(newItem=newItem._asdict())
+
+    def delete(self):
+        itemId = request.args['itemId']
+        
+        query = ToDoItems.query.filter_by(id=itemId)
+        item = query.first()
+        
+        db.session.delete(item)
+        db.session.commit()
+        
+        return jsonify(deleted = item._asdict())
         
 api.add_resource(UserLists,'/services/api/userLists')
+api.add_resource(listItems,'/services/api/listItems')
 

@@ -49,8 +49,7 @@ class ToDoLists(db.Model,CommonFuncs):
     private = db.Column(db.Boolean)
     date = db.Column(db.Date)
     
-    items = db.relationship('ToDoItems')
-    
+    items = db.relationship('ToDoItems', cascade="save-update, merge, delete")
 
 class ToDoItems(db.Model,CommonFuncs):
     __tablename__ = 'toDoItems'

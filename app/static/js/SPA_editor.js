@@ -13,9 +13,6 @@ angular.module('myApp', [])
     });
 
     $scope.addListClick = function(name){
-	//clear value
-	$scope.newListName="";
-	
 	//prepare json to pass
 	var newList = {'userId':$scope.userId,'name':name};
 
@@ -29,13 +26,22 @@ angular.module('myApp', [])
 	    $scope.selectedListName=name;
 	    $scope.$broadcast('listChangeBroadcast',$scope.selectedList);
 	});
-									
+
+	//clear value
+	$scope.newListName="";	
     }
 
     $scope.addItemClick = function(name){
-	var newItem = {'task':name,'checked':false};
+	var listId = $scope.toDoLists[$scope.selectedList].id;
+	var newItem = {'listId':listId,'task':name,'checked':false};
+	$http.post('/services/api/listItems',JSON.stringify(newItem)).then(function(data){
+	    var nItem = data.data.newItem;
+	    $scope.toDoLists[$scope.selectedList].items.push(nItem);
+	});
+
+	//clear name
 	$scope.newItemName="";
-	$scope.toDoLists[$scope.selectedList].items.push(newItem);
+
     };
 
     $scope.$on('listSelectChangeEvent',function(event,data){
@@ -93,7 +99,7 @@ angular.module('myApp', [])
 	$scope.$emit('removeListEvent',indx);
     };
 }])
-.controller('ToDoItemsController',['$scope',function($scope){
+.controller('ToDoItemsController',['$scope','$http',function($scope,$http){
     $scope.checkClick = function(indx){
 	$scope.$emit('checkClickEvent',indx);
     };
@@ -107,7 +113,11 @@ angular.module('myApp', [])
     };
 
     $scope.itemRemoveClick = function(indx){
-	$scope.items.splice(indx,1);
+	var itemId = $scope.items[indx].id;
+	
+	$http.delete('/services/api/listItems?itemId='+itemId).then(function(resp){
+	    $scope.items.splice(indx,1);
+	});
     };
 
     $scope.$on("listChangeBroadcast",function(event,data){
