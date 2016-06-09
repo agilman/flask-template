@@ -2,28 +2,36 @@
 from flask_restful import Api, Resource
 from flask import jsonify
 from app import app
-
+from app.models import *
 
 api = Api(app)
 
+def addToOrderedDict(oldDict,label,item):
+    """Creates a new ordered dictionary, containin old dictionary and a new key-value pair"""
 
-data = [{'id':1,
-             'name':"Programming Skills",
-             'items':[{'id':1,'name':'Learn Python','checked':True},
-                      {'id':2,'name':'Learn Flask','checked':True},
-                      {'id':3,'name':'Learn Bootstrap','checked':False},
-                      {'id':4,'name':'Learn Angular','checked':False},
-                      {'id':5,'name':'Learn Node.js','checked':False}]},
-            {'id':2,
-             'name':"Life Goals",
-             'items':[{'id':6,'name':'Buy a van', 'checked':False},
-                      {'id':7,'name':'Live by the river','checked':False }]
-            }]
+    newDict = []
+    for i in oldDict.keys():
+        newDict.append((i,oldDict[i] ))
+        items=[]
+
+    newDict.append((label,item))
+    return OrderedDict(newDict)
 
 class UserLists(Resource):
-    def get(self,userId=None):
-        return jsonify(data=data)
+    def get(self,userId):
+        listsQuery = ToDoLists.query.filter_by(userId=userId)
+        results = []
+        for li in listsQuery.all():
+            tempLi = li._asdict()
+            
+            items = []
+            for item in li.items:
+                items.append(item._asdict())
 
+            newLi = addToOrderedDict(tempLi,'items',items)
+            results.append(newLi)
 
-api.add_resource(UserLists,'/services/api/userLists')
+        return jsonify(lists=results)
+
+api.add_resource(UserLists,'/services/api/userLists/<int:userId>')
 

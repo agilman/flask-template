@@ -5,8 +5,8 @@ angular.module('myApp', [])
 
     var userId = document.getElementById("userId").value;
     
-    $http.get('/services/api/userLists?userId='+userId).then(function(data){
-	$scope.toDoLists = data.data.data;
+    $http.get('/services/api/userLists/'+userId).then(function(data){
+	$scope.toDoLists = data.data.lists;
 	$scope.selectedList = 0;
 	$scope.selectedListName = $scope.toDoLists[$scope.selectedList].name;
 	$scope.$broadcast('listChangeBroadcast',$scope.selectedList);
@@ -24,7 +24,7 @@ angular.module('myApp', [])
     };
 
     $scope.addItemClick = function(name){
-	var newItem = {'name':name,'checked':false};
+	var newItem = {'task':name,'checked':false};
 	$scope.newItemName="";
 	$scope.toDoLists[$scope.selectedList].items.push(newItem);
     };

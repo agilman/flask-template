@@ -1,11 +1,27 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+from collections import OrderedDict
+import datetime
 from app import app
 
 db = SQLAlchemy(app)
 
-class Users(db.Model):
+class CommonFuncs(object):
+    def _asdict(self):
+        result = OrderedDict()
+        for key in self.__mapper__.c.keys():
+            attr = getattr(self,key)
+            
+            #check for non-serializable types
+            if type(attr) is datetime.date:
+                result[key] = attr.isoformat()
+            else:
+                result[key] = attr 
+        return result
+
+
+class Users(db.Model,CommonFuncs):
     __tablename__='users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
@@ -25,20 +41,21 @@ class Users(db.Model):
         return '<User %r>' % self.username
 
 
-class ToDoLists(db.Model):
+class ToDoLists(db.Model,CommonFuncs):
     __tablename__ = 'toDoLists'
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer,db.ForeignKey('users.id'))
+    name = db.Column(db.String(64))
     private = db.Column(db.Boolean)
     date = db.Column(db.Date)
     
     items = db.relationship('ToDoItems')
     
 
-class ToDoItems(db.Model):
+class ToDoItems(db.Model,CommonFuncs):
     __tablename__ = 'toDoItems'
     id = db.Column(db.Integer, primary_key=True)
-    toDoList = db.Column(db.Integer,db.ForeignKey('toDoLists.id'))
+    listId = db.Column(db.Integer,db.ForeignKey('toDoLists.id'))
     task = db.Column(db.String(128))
     completed = db.Column(db.Boolean)
 
