@@ -33,7 +33,7 @@ angular.module('myApp', [])
 
     $scope.addItemClick = function(name){
 	var listId = $scope.toDoLists[$scope.selectedList].id;
-	var newItem = {'listId':listId,'task':name,'checked':false};
+	var newItem = {'listId':listId,'task':name,'completed':false};
 	$http.post('/services/api/listItems',JSON.stringify(newItem)).then(function(data){
 	    var nItem = data.data.newItem;
 	    $scope.toDoLists[$scope.selectedList].items.push(nItem);
@@ -41,7 +41,6 @@ angular.module('myApp', [])
 
 	//clear name
 	$scope.newItemName="";
-
     };
 
     $scope.$on('listSelectChangeEvent',function(event,data){
@@ -50,12 +49,18 @@ angular.module('myApp', [])
 	$scope.$broadcast('listChangeBroadcast',data);
     });
 
-    $scope.$on('checkClickEvent',function(event,data){
-	if ($scope.toDoLists[$scope.selectedList].items[data].checked==true){
-	    $scope.toDoLists[$scope.selectedList].items[data].checked=false;
-	}else{
-	    $scope.toDoLists[$scope.selectedList].items[data].checked=true;
-	}
+    $scope.$on('checkClickEvent',function(event,indx){
+	var item = $scope.toDoLists[$scope.selectedList].items[indx];
+	var itemId = item.id;
+	
+	var oldValue = item.completed;
+	var newValue = !oldValue;
+	
+	var update = {'id':itemId,'completed':newValue};
+	$http.put('/services/api/listItems',JSON.stringify(update)).then(function(data){
+	    $scope.toDoLists[$scope.selectedList].items[indx].completed=newValue;
+	});
+
     });
 
     $scope.$on('removeListEvent',function(event,indx){
@@ -82,7 +87,7 @@ angular.module('myApp', [])
 	var items = $scope.toDoLists[indx].items;
 	var checkedCount = 0;
 	for (var i=0;i<items.length; i++){
-	    if (items[i].checked){
+	    if (items[i].completed){
 		checkedCount+=1;
 	    }
 	}
@@ -105,7 +110,7 @@ angular.module('myApp', [])
     };
 
     $scope.checkMark = function(indx){
-        if ($scope.items[indx].checked){
+        if ($scope.items[indx].completed){
 	    return "check";
 	}else{
 	    return "unchecked";

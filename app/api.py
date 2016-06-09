@@ -2,6 +2,7 @@
 from flask_restful import Api, Resource
 from flask import jsonify, request
 from app import app
+from sqlalchemy import update
 from app.models import *
 
 api = Api(app)
@@ -76,6 +77,20 @@ class listItems(Resource):
         db.session.commit()
         
         return jsonify(newItem=newItem._asdict())
+
+    def put(self):
+        jsonDict = request.get_json()        
+        itemId= jsonDict['id']
+        completed = jsonDict['completed']
+
+        item = ToDoItems.query.filter_by(id=itemId).first()
+        
+        #to do... update all attributes
+        item.completed = completed
+
+        db.session.commit()
+     
+        return {'itemId':itemId,'status':'ok'}
 
     def delete(self):
         itemId = request.args['itemId']
