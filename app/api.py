@@ -1,6 +1,6 @@
 
 from flask_restful import Api, Resource
-from flask import jsonify
+from flask import jsonify, request
 from app import app
 from app.models import *
 
@@ -18,7 +18,10 @@ def addToOrderedDict(oldDict,label,item):
     return OrderedDict(newDict)
 
 class UserLists(Resource):
-    def get(self,userId):
+    def get(self):
+        #TODO input validation.. check if key exists?
+        userId = request.args['userId']
+
         listsQuery = ToDoLists.query.filter_by(userId=userId)
         results = []
         for li in listsQuery.all():
@@ -33,5 +36,19 @@ class UserLists(Resource):
 
         return jsonify(lists=results)
 
-api.add_resource(UserLists,'/services/api/userLists/<int:userId>')
+    def post(self):
+        jsonDict = request.get_json()
+        
+        #TODO check if keys were passed...
+        userId= jsonDict['userId']
+        name = jsonDict['name']
+        newList = ToDoLists(userId=userId,name=name)
+        
+        #todo : try except
+        db.session.add(newList)
+        db.session.commit()
+        
+        return jsonify(newList=newList._asdict())
+
+api.add_resource(UserLists,'/services/api/userLists')
 

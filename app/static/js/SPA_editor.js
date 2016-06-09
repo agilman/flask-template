@@ -4,8 +4,8 @@ angular.module('myApp', [])
 .controller('MyAppController', ['$scope','$http', function($scope,$http) {
 
     var userId = document.getElementById("userId").value;
-    
-    $http.get('/services/api/userLists/'+userId).then(function(data){
+    $scope.userId = userId;
+    $http.get('/services/api/userLists?userId='+userId).then(function(data){
 	$scope.toDoLists = data.data.lists;
 	$scope.selectedList = 0;
 	$scope.selectedListName = $scope.toDoLists[$scope.selectedList].name;
@@ -13,15 +13,24 @@ angular.module('myApp', [])
     });
 
     $scope.addListClick = function(name){
+	//clear value
 	$scope.newListName="";
-	var newList = {'name':name,'items':[] };
-	$scope.toDoLists.push(newList);
+	
+	//prepare json to pass
+	var newList = {'userId':$scope.userId,'name':name};
 
-	//select newly create item
-	$scope.selectedList=$scope.toDoLists.length-1;
-	$scope.selectedListName=name;
-	$scope.$broadcast('listChangeBroadcast',$scope.selectedList);
-    };
+	$http.post('/services/api/userLists',JSON.stringify(newList)).then(function(data){
+	    var rList = data.data.newList;
+	    rList["items"]=[];
+	    $scope.toDoLists.push(rList);
+	    
+	    //select newly create item
+	    $scope.selectedList=$scope.toDoLists.length-1;
+	    $scope.selectedListName=name;
+	    $scope.$broadcast('listChangeBroadcast',$scope.selectedList);
+	});
+									
+    }
 
     $scope.addItemClick = function(name){
 	var newItem = {'task':name,'checked':false};
