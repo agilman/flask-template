@@ -52,18 +52,23 @@ angular.module('myApp', [])
 	}
     });
 
-    $scope.$on('removeListEvent',function(event,data){
-	$scope.toDoLists.splice(data,1);
-	if (data==$scope.selectedList){
-	    $scope.selectedList=0;
-
-	    if ($scope.toDoLists.length>0){
-		$scope.selectedListName=$scope.toDoLists[0].name;
-	    }else{
-		$scope.selectedListName="";
+    $scope.$on('removeListEvent',function(event,indx){
+	var listId = $scope.toDoLists[indx].id;
+	$http.delete('/services/api/userLists?listId='+listId).then(function(resp){
+	    $scope.toDoLists.splice(indx,1);
+	   
+	    //if removing the list that is being displayed, select another list to display
+	    if (indx==$scope.selectedList){
+		$scope.selectedList=0;
+		
+		if ($scope.toDoLists.length>0){
+		    $scope.selectedListName=$scope.toDoLists[0].name;
+		}else{
+		    $scope.selectedListName="";
+		}
+		$scope.$broadcast('listChangeBroadcast',0);	    
 	    }
-	    $scope.$broadcast('listChangeBroadcast',0);	    
-	}
+	});
     });
 }])
 .controller('ToDoListsController',['$scope',function($scope){

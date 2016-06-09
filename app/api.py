@@ -50,5 +50,18 @@ class UserLists(Resource):
         
         return jsonify(newList=newList._asdict())
 
+    def delete(self):
+        #TODO input validation.. check if key exists?
+        listId = request.args['listId']
+        
+        query = ToDoLists.query.filter_by(id = listId)
+        li = query.first()
+        
+        db.session.delete(li)
+        db.session.commit()
+
+        return jsonify(deleted=li._asdict())
+
+        
 api.add_resource(UserLists,'/services/api/userLists')
 
