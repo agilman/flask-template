@@ -1,0 +1,80 @@
+{% extends "SPA_base.html" %}
+
+{% block ngApp %} ng-app="myApp"{% endblock %}
+
+{% block additionalCSS %}
+<link rel="stylesheet" href="/static/toDoList.css">
+{% endblock %}
+
+{% block mainController %} ng-controller="MyAppController"{% endblock %}
+
+{% block mainRow %}
+
+    <div class="row">
+      <div class="col-xs-4">
+	<div class="input-group">
+	  <input type="text" class="form-control" placeholder="New To Do List" ng-model="newListName">
+	  <span class="input-group-btn">
+	    <button class="btn" ng-click="addListClick(newListName)">
+	      <span class="glyphicon glyphicon-plus"></span>
+	    </button>
+	  </span>
+	</div>
+
+	<div ng-controller="ToDoListsController">
+	  <ul class="list-group">
+	    <li class="list-group-item clearfix toDoList" ng-repeat="toDoList in toDoLists" ng-click="toDoClick($index)">
+	      {{ '{{ toDoList.name }}' }}
+	      <span class="pull-right">
+		<span class="badge"> {{ '{{getChecked($index) }}' }}/{{ '{{ getTotal($index) }}'  }}</span>
+		<button class="btn" ng-click="removeListClick($index)"><span class="glyphicon glyphicon-remove"></span></button>
+	      </span>
+	    </li>
+	  </ul>
+	</div>	
+
+      </div> <!-- end col-->
+      <div class="col-xs-2">
+      </div>
+      <div class="col-xs-4">	
+	<ul class="list-group center-block">
+	  <li class="list-group-item">
+	    <span class="glyphicon glyphicon-list listName"></span>
+	    <span class="text-center listName">{{ '{{ selectedListName }}' }}</span>
+	  </li>
+	</ul>
+
+	<div class="input-group">
+	  <span class="input-group-addon">
+	    <span class="glyphicon glyphicon-plus" style="visibility:hidden"></span>
+	  </span>
+	  <input type="text" class="form-control" ng-model="newItemName" placeholder="Add New Item">
+	  <span class="input-group-btn">
+	    <button class="btn" ng-click="addItemClick(newItemName)">
+	      <span class="glyphicon glyphicon-plus"></span>
+	    </button>
+	  </span>	  
+	</div>
+
+	<div ng-controller="ToDoItemsController">
+	  <div class="input-group" ng-repeat="item in items">
+	    <span class="input-group-addon" >
+	      <span class="glyphicon glyphicon-{{ '{{ checkMark($index) }}' }} itemCheckbox" ng-click="checkClick($index)"></span>
+	    </span>
+	    <input type="text" class="form-control" value="{{ '{{ item.task }}' }}" />
+	    <span class="input-group-btn">
+	      <button class="btn" ng-click="itemRemoveClick($index)">
+		<span class="glyphicon glyphicon-remove"></span>
+	      </button>
+	    </span>	  
+	  </div>
+	</div>
+
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block additionalJS %}
+  <script src="/static/js/SPA_editor.js"></script>
+{% endblock %}

@@ -43,8 +43,10 @@ def users(userName):
             loginName = session['userName']
             loginId = session['userId']
             if loginId==userId: #If user is looking at his own page... load editor mode
-                return render_template("SPA_editor.html", userId=userId)
+                return render_template("SPA_editor.html",userName=userDbName,loginName=loginName, userId=userId)
                 
-        return render_template("listViewer.html",userName=userDbName, userId=userId, loginName=loginName)
+            else:
+                return render_template("SPA_viewerSession.html",userName=userDbName, userId=userId, loginName=loginName)
+        return render_template("SPA_viewer.html",userName=userDbName, userId=userId, loginName=loginName)
 
     
