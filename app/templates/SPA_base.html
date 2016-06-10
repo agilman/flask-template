@@ -46,7 +46,7 @@
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
 		{% if loginName %}
-		<li>Logged in as {{ loginName }}</li>
+		<li><a href="/users/{{ loginName }}">Logged in as {{ loginName }}</a></li>
 		<li><a href="/auth/logout">Log Out</a></li>
 		{% else %}
 		<li><a href="/auth/login">Log in</a></li>

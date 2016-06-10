@@ -1,17 +1,17 @@
 {% extends "SPA_base.html" %}
 
-{% block ngApp %} ng-app="myApp" {% endblock %}
+{% block ngApp %} ng-app="myApp"{% endblock %}
 
 {% block additionalCSS %}
-<link rel="stylesheet" href="/static/toDoList_editor.css">
+<link rel="stylesheet" href="/static/toDoList.css">
 {% endblock %}
 
-{% block mainController %} ng-controller="MyAppController" {% endblock %}
+{% block mainController %} ng-controller="MyAppController"{% endblock %}
 
 {% block mainRow %}
+
     <div class="row">
       <div class="col-xs-4">
-	<h2>{{ userName }}'s lists:</h2>
 	<div class="input-group">
 	  <input type="text" class="form-control" placeholder="New To Do List" ng-model="newListName">
 	  <span class="input-group-btn">
@@ -34,9 +34,15 @@
 	</div>	
 
       </div> <!-- end col-->
-
+      <div class="col-xs-2">
+      </div>
       <div class="col-xs-4">	
-	<h4>{{ '{{ selectedListName }}' }}:</h4>
+	<ul class="list-group center-block">
+	  <li class="list-group-item">
+	    <span class="glyphicon glyphicon-list listName"></span>
+	    <span class="text-center listName">{{ '{{ selectedListName }}' }}</span>
+	  </li>
+	</ul>
 
 	<div class="input-group">
 	  <span class="input-group-addon">
@@ -70,5 +76,5 @@
 {% endblock %}
 
 {% block additionalJS %}
-<script src="/static/js/SPA_editor.js"></script>
+  <script src="/static/js/SPA_editor.js"></script>
 {% endblock %}
