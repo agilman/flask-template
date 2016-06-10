@@ -1,0 +1,22 @@
+
+li.list-group-item.toDoList:hover{
+    color: #01FF22 ;
+    background-color: #000000;
+}
+
+.task {
+    color : #111111;
+    cursor:default;
+}
+
+.toDoList{
+    color: #111111;
+}
+
+.itemCheckbox:hover{
+    cursor:pointer;
+}
+
+.listName:hover{
+    cursor:default;
+}
