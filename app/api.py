@@ -93,9 +93,7 @@ class ListItems(Resource):
      
         return {'itemId':itemId,'status':'ok'}
 
-    def delete(self):
-        itemId = request.args['itemId']
-        
+    def delete(self,itemId):
         query = ToDoItems.query.filter_by(id=itemId)
         item = query.first()
         
@@ -106,5 +104,5 @@ class ListItems(Resource):
         
 api.add_resource(UserLists,'/services/api/userLists/<int:userId>')
 api.add_resource(Lists,'/services/api/lists/<int:listId>','/services/api/lists')
-api.add_resource(ListItems,'/services/api/listItems')
+api.add_resource(ListItems,'/services/api/listItems/<int:itemId>','/services/api/listItems')
 

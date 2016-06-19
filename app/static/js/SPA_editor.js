@@ -120,7 +120,7 @@ angular.module('myApp', [])
     $scope.itemRemoveClick = function(indx){
 	var itemId = $scope.items[indx].id;
 	
-	$http.delete('/services/api/listItems?itemId='+itemId).then(function(resp){
+	$http.delete('/services/api/listItems/'+itemId).then(function(resp){
 	    $scope.items.splice(indx,1);
 	});
     };
