@@ -5,7 +5,7 @@ angular.module('myApp', [])
 
     var userId = document.getElementById("userId").value;
     $scope.userId = userId;
-    $http.get('/services/api/userLists?userId='+userId).then(function(data){
+    $http.get('/services/api/userLists/'+userId).then(function(data){
 	$scope.toDoLists = data.data.lists;
 	$scope.selectedList = 0;
 	$scope.selectedListName = $scope.toDoLists[$scope.selectedList].name;
@@ -16,7 +16,7 @@ angular.module('myApp', [])
 	//prepare json to pass
 	var newList = {'userId':$scope.userId,'name':name};
 
-	$http.post('/services/api/userLists',JSON.stringify(newList)).then(function(data){
+	$http.post('/services/api/lists',JSON.stringify(newList)).then(function(data){
 	    var rList = data.data.newList;
 	    rList["items"]=[];
 	    $scope.toDoLists.push(rList);
@@ -65,7 +65,7 @@ angular.module('myApp', [])
 
     $scope.$on('removeListEvent',function(event,indx){
 	var listId = $scope.toDoLists[indx].id;
-	$http.delete('/services/api/userLists?listId='+listId).then(function(resp){
+	$http.delete('/services/api/lists/'+listId).then(function(resp){
 	    $scope.toDoLists.splice(indx,1);
 	   
 	    //if removing the list that is being displayed, select another list to display

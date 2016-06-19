@@ -5,7 +5,7 @@ angular.module('myApp', [])
 
     var userId = document.getElementById("userId").value;
     $scope.userId = userId;
-    $http.get('/services/api/userLists?userId='+userId).then(function(data){
+    $http.get('/services/api/userLists/'+userId).then(function(data){
 	$scope.toDoLists = data.data.lists;
 	$scope.selectedList = 0;
 	$scope.selectedListName = $scope.toDoLists[$scope.selectedList].name;

@@ -19,9 +19,9 @@ def addToOrderedDict(oldDict,label,item):
     return OrderedDict(newDict)
 
 class UserLists(Resource):
-    def get(self):
+    def get(self,userId):
         #TODO input validation.. check if key exists?
-        userId = request.args['userId']
+        #userId = request.args['userId']
 
         listsQuery = ToDoLists.query.filter_by(userId=userId)
         results = []
@@ -37,6 +37,7 @@ class UserLists(Resource):
 
         return jsonify(lists=results)
 
+class Lists(Resource):
     def post(self):
         jsonDict = request.get_json()
         
@@ -51,9 +52,9 @@ class UserLists(Resource):
         
         return jsonify(newList=newList._asdict())
 
-    def delete(self):
+    def delete(self,listId):
         #TODO input validation.. check if key exists?
-        listId = request.args['listId']
+        #listId = request.args['listId']
         
         query = ToDoLists.query.filter_by(id = listId)
         li = query.first()
@@ -63,7 +64,7 @@ class UserLists(Resource):
 
         return jsonify(deleted=li._asdict())
 
-class listItems(Resource):
+class ListItems(Resource):
     def post(self):
         jsonDict = request.get_json()
         
@@ -103,6 +104,7 @@ class listItems(Resource):
         
         return jsonify(deleted = item._asdict())
         
-api.add_resource(UserLists,'/services/api/userLists')
-api.add_resource(listItems,'/services/api/listItems')
+api.add_resource(UserLists,'/services/api/userLists/<int:userId>')
+api.add_resource(Lists,'/services/api/lists/<int:listId>','/services/api/lists')
+api.add_resource(ListItems,'/services/api/listItems')
 
